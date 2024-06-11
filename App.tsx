@@ -15,6 +15,7 @@ import {
 } from 'react-native-paper';
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {ChatsScreen} from './src/screens/chats';
 
 interface NavRoutes {
   key: string;
@@ -37,7 +38,7 @@ function App(): React.JSX.Element {
   ]);
 
   const renderScene = Screens.SceneMap({
-    chats: () => <Text>Music</Text>,
+    chats: ChatsScreen,
     calls: () => <Text>Albums</Text>,
     people: () => <Text>Albums</Text>,
     stories: () => <Text>Albums</Text>,

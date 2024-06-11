@@ -6,112 +6,60 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
+
+import {ScrollView, View, StyleSheet, useColorScheme} from 'react-native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
+  Provider as PaperProvider,
+  BottomNavigation as Screens,
   Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+} from 'react-native-paper';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-type SectionProps = PropsWithChildren<{
+interface NavRoutes {
+  key: string;
   title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+  focusedIcon: string;
 }
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState<NavRoutes[]>([
+    {
+      key: 'chats',
+      title: 'Chats',
+      focusedIcon: 'chat',
+    },
+    {key: 'calls', title: 'Calls', focusedIcon: 'video'},
+    {key: 'people', title: 'People', focusedIcon: 'account'},
+    {key: 'stories', title: 'Stories', focusedIcon: 'book'},
+  ]);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const renderScene = Screens.SceneMap({
+    chats: () => <Text>Music</Text>,
+    calls: () => <Text>Albums</Text>,
+    people: () => <Text>Albums</Text>,
+    stories: () => <Text>Albums</Text>,
+  });
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <PaperProvider>
+        <Screens
+          navigationState={{index, routes}}
+          onIndexChange={setIndex}
+          renderScene={renderScene}
+        />
+      </PaperProvider>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {
+    flex: 1,
+    backgroundColor: 'red',
   },
 });
 

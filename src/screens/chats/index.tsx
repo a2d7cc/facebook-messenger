@@ -1,14 +1,18 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Avatar} from 'react-native-paper';
+import {useNavigate} from 'react-router-native';
 
 export const ChatsScreen = () => {
   const friends = [{id: 1, name: 'John'}];
+  const navigate = useNavigate();
 
   return (
     <View style={styles.container}>
       {friends.map(friend => (
-        <Pressable key={friend.id} onPress={() => {}}>
+        <Pressable
+          key={friend.id}
+          onPress={() => navigate(`/chat/${friend.id}`)}>
           <View style={styles.friend}>
             <Avatar.Image
               size={72}

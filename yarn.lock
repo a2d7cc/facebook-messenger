@@ -1489,6 +1489,11 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
+"@remix-run/router@1.16.1":
+  version "1.16.1"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.16.1.tgz"
+  integrity sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig==
+
 "@rnx-kit/chromium-edge-launcher@^1.0.0":
   version "1.0.0"
   dependencies:
@@ -1722,6 +1727,11 @@
 
 "@ungap/structured-clone@^1.2.0":
   version "1.2.0"
+
+"@ungap/url-search-params@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@ungap/url-search-params/-/url-search-params-0.2.2.tgz"
+  integrity sha512-qQsguKXZVKdCixOHX9jqnX/K/1HekPDpGKyEcXHT+zR6EjGA7S4boSuelL4uuPv6YfhN0n8c4UxW+v/Z3gM2iw==
 
 abort-controller@^3.0.0:
   version "3.0.0"
@@ -4349,7 +4359,7 @@ react-native-vector-icons@*, react-native-vector-icons@^10.1.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, react-native@0.74.2:
+react-native@*, react-native@>=0.44, react-native@0.74.2:
   version "0.74.2"
   dependencies:
     "@jest/create-cache-key-function" "^29.6.3"
@@ -4392,6 +4402,21 @@ react-native@*, react-native@0.74.2:
 
 react-refresh@^0.14.0:
   version "0.14.2"
+
+react-router-native@^6.23.1:
+  version "6.23.1"
+  resolved "https://registry.npmjs.org/react-router-native/-/react-router-native-6.23.1.tgz"
+  integrity sha512-xFIIc7x9xRzD+UZ48Qw6+8qqSQr0vv25BPZJ9Nk0R/b43gLJsfL2OmJKgXFDTLYD9mRgBOjUdS9NXxsRFVt8Kw==
+  dependencies:
+    "@ungap/url-search-params" "^0.2.2"
+    react-router "6.23.1"
+
+react-router@6.23.1:
+  version "6.23.1"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.23.1.tgz"
+  integrity sha512-fzcOaRF69uvqbbM7OhvQyBTFDVrrGlsFdS3AL+1KfIBtGETibHzi3FkoTRyiDJnWNc2VxrfvR+657ROHjaNjqQ==
+  dependencies:
+    "@remix-run/router" "1.16.1"
 
 react-shallow-renderer@^16.15.0:
   version "16.15.0"

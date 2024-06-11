@@ -16,6 +16,8 @@ import {
 
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ChatsScreen} from './src/screens/chats';
+import {NativeRouter, Routes, Route} from 'react-router-native';
+import ChatScreen from './src/screens/chat/chat';
 
 interface NavRoutes {
   key: string;
@@ -47,11 +49,21 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
       <PaperProvider>
-        <Screens
-          navigationState={{index, routes}}
-          onIndexChange={setIndex}
-          renderScene={renderScene}
-        />
+        <NativeRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Screens
+                  navigationState={{index, routes}}
+                  onIndexChange={setIndex}
+                  renderScene={renderScene}
+                />
+              }
+            />
+            <Route path="/chat/:chatId" element={<ChatScreen />} />
+          </Routes>
+        </NativeRouter>
       </PaperProvider>
     </SafeAreaProvider>
   );

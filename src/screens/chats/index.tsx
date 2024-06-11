@@ -1,3 +1,4 @@
+import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Avatar} from 'react-native-paper';
 
@@ -14,6 +15,9 @@ export const ChatsScreen = () => {
               style={styles.profilePicture}
               source={{
                 uri: `https://randomuser.me/api/portraits/men/${friend.id}.jpg`,
+              }}
+              onError={error => {
+                console.log('Error loading image', error);
               }}
             />
             <View>

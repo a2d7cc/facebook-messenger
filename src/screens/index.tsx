@@ -1,4 +1,4 @@
-import {NativeRouter, Routes} from 'react-router-native';
+import {NativeRouter, Routes, Route} from 'react-router-native';
 
 import LoginScreen from './login';
 import RegisterScreen from './register';
@@ -14,3 +14,5 @@ const Screens = () => {
     </NativeRouter>
   );
 };
+
+export default Screens;

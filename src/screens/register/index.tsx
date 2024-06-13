@@ -10,9 +10,21 @@ import {
   COLOR_WHITE,
 } from '../../shared/constants/colors';
 import Loader from '../../shared/components/Loader';
+import {useMutation} from 'react-query';
+import {register} from '../../shared/auth/requests';
+import {NewUser} from '../../shared/auth/models';
 
 const RegisterScreen = () => {
   const navigate = useNavigate();
+  const registerMutation = useMutation(
+    (newUser: NewUser) => register(newUser),
+    {
+      onSuccess: () => {
+        resetForm();
+        navigate('/login');
+      },
+    },
+  );
 
   // write useState for firstName, lastName, password, email
   const [firstName, setFirstName] = useState('');
@@ -20,8 +32,24 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+  };
+
   const registerHandler = () => {
-    // Write code for register user
+    if (!firstName || !lastName || !email || !password) {
+      return;
+    }
+
+    registerMutation.mutate({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
   };
 
   return (
@@ -34,32 +62,39 @@ const RegisterScreen = () => {
           value={firstName}
           onChangeText={setFirstName}
         />
-        {/* Write like input aboe also for other variable from useState */}
+
         <Input
           placeholder="Last Name"
           value={lastName}
           onChangeText={setLastName}
         />
+
         <Input placeholder="Email" value={email} onChangeText={setEmail} />
+
         <Input
+          secure
           placeholder="Password"
           value={password}
           onChangeText={setPassword}
-          secure={true}
         />
-        <Button
-          style={styles.registerButton}
-          labelStyle={styles.registerButtonText}
-          mode="contained"
-          onPress={registerHandler}>
-          Register
-        </Button>
+
+        <View style={styles.registerButtonContainer}>
+          {registerMutation.isLoading ? (
+            <Loader />
+          ) : (
+            <Button
+              style={styles.registerButton}
+              labelStyle={styles.registerButtonText}
+              mode="contained"
+              onPress={registerHandler}>
+              Register
+            </Button>
+          )}
+        </View>
       </View>
-      <Button
-        labelStyle={styles.signUpText}
-        mode="text"
-        onPress={() => navigate('/login')}>
-        Already have an account? Login
+
+      <Button labelStyle={styles.signUpText} onPress={() => navigate('/login')}>
+        Already a member? Log In
       </Button>
     </View>
   );

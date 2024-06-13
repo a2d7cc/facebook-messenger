@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import {Avatar} from 'react-native-paper';
+import {Avatar, Button} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
+import {AuthContext} from '../../shared/auth/contexts/auth.context';
 
 export const ChatsScreen = () => {
   const friends = [{id: 1, name: 'John'}];
   const navigate = useNavigate();
+  const {onLogout} = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -31,6 +33,7 @@ export const ChatsScreen = () => {
           </View>
         </Pressable>
       ))}
+      <Button onPress={onLogout}>Sign Out</Button>
     </View>
   );
 };

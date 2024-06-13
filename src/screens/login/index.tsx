@@ -14,7 +14,7 @@ import Input from '../../shared/components/Input';
 import Loader from '../../shared/components/Loader';
 
 const LoginScreen = () => {
-  const {isLoggingIn, onLogin} = useContext(AuthContext);
+  const {isLogginIn, onLogin} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const LoginScreen = () => {
         />
 
         <View style={styles.loginButtonContainer}>
-          {isLoggingIn ? (
+          {isLogginIn ? (
             <Loader />
           ) : (
             <Button

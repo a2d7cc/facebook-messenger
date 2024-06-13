@@ -9,6 +9,7 @@ import {
   COLOR_FB_SECONDARY,
   COLOR_WHITE,
 } from '../../shared/constants/colors';
+import Loader from '../../shared/components/Loader';
 
 const RegisterScreen = () => {
   const navigate = useNavigate();

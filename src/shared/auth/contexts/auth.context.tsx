@@ -1,7 +1,8 @@
 import {createContext, useState, ReactNode} from 'react';
-import {LoginUser, UserDetails} from '../models';
+import {Credentials, LoginUser, UserDetails} from '../models';
 import {useMutation} from 'react-query';
 import {login} from '../requests';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface IAuthContext {
   userDetails?: UserDetails;
@@ -35,6 +36,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         setUserDetails(credentials.user);
         setJwt(credentials.token);
         setIsLoggedIn(true);
+        _storeCredentials(credentials);
       },
       onError: error => {
         console.log('error', error);
@@ -54,6 +56,14 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     setUserDetails(undefined);
     setJwt(undefined);
     setIsLoggedIn(false);
+  };
+
+  const _storeCredentials = async (credentials: Credentials) => {
+    try {
+      await AsyncStorage.setItem('credentials', JSON.stringify(credentials));
+    } catch (error) {
+      console.log('_storeCredentials', error);
+    }
   };
 
   return (

@@ -3,11 +3,22 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Avatar, Button} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
 import {AuthContext} from '../../shared/auth/contexts/auth.context';
+import {useQuery} from 'react-query';
+import {baseUrl, get} from '../../shared/requests';
 
 export const ChatsScreen = () => {
   const friends = [{id: 1, name: 'John'}];
   const navigate = useNavigate();
-  const {onLogout} = useContext(AuthContext);
+  const {onLogout, jwt} = useContext(AuthContext);
+
+  useQuery(
+    'presence',
+    async () => {
+      const {data: presence} = await get(baseUrl + '/presence');
+      return presence;
+    },
+    {enabled: !!jwt},
+  );
 
   return (
     <View style={styles.container}>

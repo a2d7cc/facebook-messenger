@@ -1,14 +1,16 @@
-import {createContext, useState, ReactNode} from 'react';
+import {createContext, useState, ReactNode, useRef, useEffect} from 'react';
 import {Credentials, LoginUser, UserDetails} from '../models';
 import {useMutation} from 'react-query';
 import {login} from '../requests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AppState} from 'react-native';
 
 export interface IAuthContext {
   userDetails?: UserDetails;
   jwt?: string;
   isLoggedIn: boolean;
   isLogginIn: boolean;
+  isActive: boolean;
   onLogin: (loginUser: LoginUser) => void;
   onLogout: () => void;
 }
@@ -18,6 +20,7 @@ export const AuthContext = createContext<IAuthContext>({
   jwt: undefined,
   isLoggedIn: false,
   isLogginIn: false,
+  isActive: false,
   onLogin: () => {},
   onLogout: () => {},
 });
@@ -27,6 +30,20 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   const [jwt, setJwt] = useState<string>();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const loginMutation = useMutation(
     (loginUser: LoginUser) => login(loginUser),
@@ -73,6 +90,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         jwt,
         isLoggedIn,
         isLogginIn: isLoggingIn,
+        isActive: isLoggedIn && appStateVisible === 'active',
         onLogin: loginHandler,
         onLogout: logoutHandler,
       }}>

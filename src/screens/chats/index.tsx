@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+/* import React, {useContext} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {Avatar, Button} from 'react-native-paper';
 import {useNavigate} from 'react-router-native';
@@ -65,3 +65,10 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
 });
+ */
+
+import Friends from '../../shared/friends/components/Friends';
+
+export const ChatsScreen = () => {
+  return <Friends showMessage />;
+};

@@ -1,10 +1,9 @@
-import {Platform} from 'react-native';
 import axios, {InternalAxiosRequestConfig} from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Credentials} from './auth/models';
+import {IP_ADDRESS} from '@env';
 
-export const baseUrl =
-  Platform.OS === 'android' ? 'http://10.0.2.2:4000' : 'http://localhost:4000';
+export const baseUrl = `http://${IP_ADDRESS ?? '10.0.2.2'}:4000`;
 
 axios.interceptors.request.use(
   config => {

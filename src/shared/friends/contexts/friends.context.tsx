@@ -26,20 +26,24 @@ export interface IFriendsContext {
   friends: ActiveFriend[];
   isLoading: boolean;
   setFriend: (friend: ActiveFriend) => void;
+  callActivity: CallActivity;
   setCallDetails: (callDetails: CallDetails | null) => void;
   setCallActivity: (callActivity: CallActivity) => void;
   startCall: (details: CallDetails) => void;
   respondToCall: (response: CallResponse) => void;
+  callDetails: CallDetails | null;
 }
 
 export const FriendsContext = createContext<IFriendsContext>({
   friends: [],
   isLoading: false,
   setFriend: () => null,
+  callActivity: CallActivity.None,
   setCallDetails: () => null,
   setCallActivity: () => null,
   startCall: () => null,
   respondToCall: () => null,
+  callDetails: null,
 });
 
 export const FriendsProvider = ({children}: {children: ReactNode}) => {
@@ -160,10 +164,12 @@ export const FriendsProvider = ({children}: {children: ReactNode}) => {
         friends,
         isLoading,
         setFriend,
+        callActivity,
         setCallDetails,
         setCallActivity,
         startCall,
         respondToCall,
+        callDetails,
       }}>
       {children}
     </FriendsContext.Provider>

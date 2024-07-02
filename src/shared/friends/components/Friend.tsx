@@ -1,4 +1,3 @@
-import {useContext, useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 
 import {useNavigate} from 'react-router-native';
@@ -6,6 +5,8 @@ import {Avatar} from 'react-native-paper';
 
 import {ActiveFriend} from '../models';
 import {COLOR_ONLINE_GREEN} from '../../constants/colors';
+import {useContext, useEffect} from 'react';
+import {FriendsContext} from '../contexts/friends.context';
 
 type Props = {
   friend: ActiveFriend;
@@ -14,8 +15,14 @@ type Props = {
 
 const Friend = ({friend, showMessage = false}: Props) => {
   const navigate = useNavigate();
+  const {setFriend} = useContext(FriendsContext);
 
   const {id, firstName, lastName, isActive} = friend;
+  console.log('### isActive', isActive);
+
+  useEffect(() => {
+    setFriend(friend);
+  }, [friend, isActive, setFriend]);
 
   return (
     <Pressable

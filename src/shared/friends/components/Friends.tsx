@@ -17,7 +17,7 @@ const Friends = ({showMessage = false}: Props) => {
   const {friends, isLoading} = useContext(FriendsContext);
 
   if (isLoading) {
-    return <Loader dark />;
+    return <Loader />;
   }
 
   return (

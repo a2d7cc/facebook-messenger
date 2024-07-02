@@ -33,6 +33,8 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
 
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  console.log('isLoggedIn', isLoggedIn);
+  console.log('appStateVisible', appStateVisible);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {

@@ -18,16 +18,19 @@ import getFriends from '../helpers/friends';
 export interface IFriendsContext {
   friends: ActiveFriend[];
   isLoading: boolean;
+  setFriend: (friend: ActiveFriend) => void;
 }
 
 export const FriendsContext = createContext<IFriendsContext>({
   friends: [],
   isLoading: false,
+  setFriend: () => null,
 });
 
 export const FriendsProvider = ({children}: {children: ReactNode}) => {
   const {isActive, jwt, isLoggedIn, userDetails} = useContext(AuthContext);
   const [friends, setFriends] = useState<ActiveFriend[]>([]);
+  const [friend, setFriend] = useState<ActiveFriend>({} as ActiveFriend);
   const [isLoading, setIsLoading] = useState(false);
 
   useQuery(
@@ -75,6 +78,7 @@ export const FriendsProvider = ({children}: {children: ReactNode}) => {
   );
 
   useEffect(() => {
+    console.log('updateActiveStatus ####', isActive);
     socket.emit('updateActiveStatus', isActive);
     socket.on(
       'friendActive',
@@ -87,20 +91,21 @@ export const FriendsProvider = ({children}: {children: ReactNode}) => {
           const updatedFriends = [...prevFriends];
           (updatedFriends.find(f => f.id === id) as ActiveFriend).isActive =
             isFriendActive;
-
+          console.log('updatedFriends', updatedFriends);
           return updatedFriends;
         });
       },
     );
 
     return () => {
+      console.log('updateActiveStatus CB', false);
       socket.emit('updateActiveStatus', false);
       socket.off('friendActive');
     };
   }, []);
 
   return (
-    <FriendsContext.Provider value={{friends, isLoading}}>
+    <FriendsContext.Provider value={{friends, isLoading, setFriend}}>
       {children}
     </FriendsContext.Provider>
   );
